@@ -1,0 +1,64 @@
+{
+  "schemaVersion": "1.0",
+  "slug": "cache-warmup",
+  "name": "Cache Warmup",
+  "summary": "Calls approved HTTP paths on the target fleet to warm caches before traffic.",
+  "version": "1.0.0",
+  "runner": "cache_warmup",
+  "language": "python",
+  "riskLevel": "MEDIUM",
+  "inputs": {
+    "type": "object",
+    "properties": {
+      "http_paths": {
+        "type": "array",
+        "items": {
+          "type": "string",
+          "maxLength": 120
+        },
+        "minItems": 1,
+        "maxItems": 5,
+        "default": [
+          "/health"
+        ]
+      },
+      "timeout_seconds": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 30,
+        "default": 5
+      }
+    },
+    "additionalProperties": false
+  },
+  "outputs": {
+    "type": "object",
+    "properties": {
+      "summary": {
+        "type": "string"
+      },
+      "metrics": {
+        "type": "object"
+      },
+      "details": {
+        "type": "object"
+      }
+    }
+  },
+  "supportedEnvironments": [
+    "uat",
+    "production"
+  ],
+  "timeoutSeconds": 180,
+  "approvalRequired": false,
+  "systems": [
+    "UAT application fleet",
+    "Production API cluster"
+  ],
+  "requiredPermissions": [
+    "executions:create"
+  ],
+  "dependencies": [],
+  "owner": "priya.nair@june.dev",
+  "team": "platform-engineering"
+}

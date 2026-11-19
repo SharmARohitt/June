@@ -1,0 +1,61 @@
+{
+  "schemaVersion": "1.0",
+  "slug": "configuration-rollout",
+  "name": "Configuration Rollout",
+  "summary": "Writes a validated configuration bundle into an isolated deployment directory.",
+  "version": "1.0.0",
+  "runner": "config_rollout",
+  "language": "python",
+  "riskLevel": "HIGH",
+  "inputs": {
+    "type": "object",
+    "properties": {
+      "config_key": {
+        "type": "string",
+        "enum": [
+          "LOG_LEVEL",
+          "RATE_LIMIT",
+          "FEATURE_FLAGS"
+        ],
+        "default": "LOG_LEVEL"
+      },
+      "config_value": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 200,
+        "default": "INFO"
+      }
+    },
+    "additionalProperties": false
+  },
+  "outputs": {
+    "type": "object",
+    "properties": {
+      "summary": {
+        "type": "string"
+      },
+      "metrics": {
+        "type": "object"
+      },
+      "details": {
+        "type": "object"
+      }
+    }
+  },
+  "supportedEnvironments": [
+    "uat",
+    "production"
+  ],
+  "timeoutSeconds": 300,
+  "approvalRequired": true,
+  "systems": [
+    "UAT sandbox deployment",
+    "Production deployment (simulated in this install)"
+  ],
+  "requiredPermissions": [
+    "executions:create"
+  ],
+  "dependencies": [],
+  "owner": "priya.nair@june.dev",
+  "team": "platform-engineering"
+}

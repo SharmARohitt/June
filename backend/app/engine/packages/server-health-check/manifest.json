@@ -1,0 +1,61 @@
+{
+  "schemaVersion": "1.0",
+  "slug": "server-health-check",
+  "name": "Server Health Check",
+  "summary": "Checks whether the servers in an approved target group are reachable and responding.",
+  "version": "1.0.0",
+  "runner": "health_check",
+  "language": "python",
+  "riskLevel": "LOW",
+  "inputs": {
+    "type": "object",
+    "properties": {
+      "timeout_seconds": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 30,
+        "default": 5
+      },
+      "http_path": {
+        "type": "string",
+        "maxLength": 120,
+        "default": "/health"
+      },
+      "include_agent_heartbeat": {
+        "type": "boolean",
+        "default": true
+      }
+    },
+    "additionalProperties": false
+  },
+  "outputs": {
+    "type": "object",
+    "properties": {
+      "summary": {
+        "type": "string"
+      },
+      "metrics": {
+        "type": "object"
+      },
+      "details": {
+        "type": "object"
+      }
+    }
+  },
+  "supportedEnvironments": [
+    "uat",
+    "production"
+  ],
+  "timeoutSeconds": 120,
+  "approvalRequired": false,
+  "systems": [
+    "UAT application fleet",
+    "Production API cluster"
+  ],
+  "requiredPermissions": [
+    "executions:create"
+  ],
+  "dependencies": [],
+  "owner": "priya.nair@june.dev",
+  "team": "platform-engineering"
+}

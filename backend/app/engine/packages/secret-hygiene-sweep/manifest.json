@@ -1,0 +1,49 @@
+{
+  "schemaVersion": "1.0",
+  "slug": "secret-hygiene-sweep",
+  "name": "Secret Hygiene Sweep",
+  "summary": "Scans the automation package for committed credentials and risky secret patterns.",
+  "version": "1.0.0",
+  "runner": "secret_sweep",
+  "language": "python",
+  "riskLevel": "HIGH",
+  "inputs": {
+    "type": "object",
+    "properties": {
+      "fail_on_high": {
+        "type": "boolean",
+        "default": true
+      }
+    },
+    "additionalProperties": false
+  },
+  "outputs": {
+    "type": "object",
+    "properties": {
+      "summary": {
+        "type": "string"
+      },
+      "metrics": {
+        "type": "object"
+      },
+      "details": {
+        "type": "object"
+      }
+    }
+  },
+  "supportedEnvironments": [
+    "uat",
+    "production"
+  ],
+  "timeoutSeconds": 180,
+  "approvalRequired": true,
+  "systems": [
+    "Automation package in JUNE storage"
+  ],
+  "requiredPermissions": [
+    "executions:create"
+  ],
+  "dependencies": [],
+  "owner": "priya.nair@june.dev",
+  "team": "platform-engineering"
+}

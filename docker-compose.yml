@@ -1,0 +1,67 @@
+name: june
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: june
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}
+      POSTGRES_DB: june
+    volumes:
+      - june_pg:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U june -d june"]
+      interval: 5s
+      timeout: 3s
+      retries: 12
+
+  redis:
+    image: redis:7-alpine
+    command: ["redis-server", "--appendonly", "yes"]
+    volumes:
+      - june_redis:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 12
+
+  backend:
+    build:
+      context: ./backend
+    environment:
+      JUNE_ENV: development
+      JUNE_DATABASE_URL: postgresql+asyncpg://june:${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}@postgres:5432/june
+      JUNE_REDIS_URL: redis://redis:6379/0
+      JUNE_FRONTEND_ORIGIN: http://localhost:3000
+      JUNE_SECRET_KEY: ${JUNE_SECRET_KEY:?Set JUNE_SECRET_KEY in .env}
+      JUNE_SEED_ON_START: ${JUNE_SEED_ON_START:-false}
+      JUNE_SEED_PASSWORD: ${JUNE_SEED_PASSWORD:-}
+      JUNE_AUTO_CREATE_TABLES: "false"
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend/storage:/app/storage
+      - ./backend/sandboxes:/app/sandboxes
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        BACKEND_INTERNAL_URL: http://backend:8000
+    environment:
+      BACKEND_INTERNAL_URL: http://backend:8000
+      NEXT_PUBLIC_API_BASE: /api/v1
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+
+volumes:
+  june_pg:
+  june_redis:

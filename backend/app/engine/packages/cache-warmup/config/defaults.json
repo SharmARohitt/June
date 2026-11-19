@@ -1,0 +1,6 @@
+{
+  "http_paths": [
+    "/health"
+  ],
+  "timeout_seconds": 5
+}

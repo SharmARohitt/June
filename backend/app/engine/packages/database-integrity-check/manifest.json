@@ -1,0 +1,48 @@
+{
+  "schemaVersion": "1.0",
+  "slug": "database-integrity-check",
+  "name": "Database Integrity Check",
+  "summary": "Runs read-only integrity and row-count checks against the JUNE control-plane database.",
+  "version": "1.0.0",
+  "runner": "db_integrity",
+  "language": "python",
+  "riskLevel": "MEDIUM",
+  "inputs": {
+    "type": "object",
+    "properties": {
+      "include_row_counts": {
+        "type": "boolean",
+        "default": true
+      }
+    },
+    "additionalProperties": false
+  },
+  "outputs": {
+    "type": "object",
+    "properties": {
+      "summary": {
+        "type": "string"
+      },
+      "metrics": {
+        "type": "object"
+      },
+      "details": {
+        "type": "object"
+      }
+    }
+  },
+  "supportedEnvironments": [
+    "uat"
+  ],
+  "timeoutSeconds": 180,
+  "approvalRequired": false,
+  "systems": [
+    "JUNE control-plane database"
+  ],
+  "requiredPermissions": [
+    "executions:create"
+  ],
+  "dependencies": [],
+  "owner": "priya.nair@june.dev",
+  "team": "platform-engineering"
+}

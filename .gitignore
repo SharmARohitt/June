@@ -1,0 +1,38 @@
+# Environment / secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Python
+backend/.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+backend/june.db
+backend/june.db-journal
+backend/june.db-shm
+backend/june.db-wal
+backend/storage/*
+!backend/storage/.gitkeep
+backend/sandboxes/*
+!backend/sandboxes/.gitkeep
+
+# Node
+frontend/node_modules/
+frontend/.next/
+frontend/out/
+frontend/coverage/
+frontend/test-results/
+frontend/playwright-report/
+frontend/tsconfig.tsbuildinfo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log

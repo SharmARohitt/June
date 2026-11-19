@@ -1,0 +1,49 @@
+{
+  "schemaVersion": "1.0",
+  "slug": "release-evidence-bundle",
+  "name": "Release Evidence Bundle",
+  "summary": "Packages SHA-256 hashes of the deployed package into a release evidence artifact.",
+  "version": "1.0.0",
+  "runner": "artifact_export",
+  "language": "python",
+  "riskLevel": "LOW",
+  "inputs": {
+    "type": "object",
+    "properties": {
+      "label": {
+        "type": "string",
+        "maxLength": 80,
+        "default": "release-evidence"
+      }
+    },
+    "additionalProperties": false
+  },
+  "outputs": {
+    "type": "object",
+    "properties": {
+      "summary": {
+        "type": "string"
+      },
+      "metrics": {
+        "type": "object"
+      },
+      "details": {
+        "type": "object"
+      }
+    }
+  },
+  "supportedEnvironments": [
+    "uat"
+  ],
+  "timeoutSeconds": 120,
+  "approvalRequired": false,
+  "systems": [
+    "JUNE evidence storage"
+  ],
+  "requiredPermissions": [
+    "executions:create"
+  ],
+  "dependencies": [],
+  "owner": "priya.nair@june.dev",
+  "team": "platform-engineering"
+}
